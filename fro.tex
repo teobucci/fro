@@ -55,7 +55,7 @@
 %\counterwithout{figure}{chapter}
 %\counterwithout{equation}{chapter}
 
-%\allowdisplaybreaks[4] % Consente di rompere equazioni su più pagine
+\allowdisplaybreaks[4] % Consente di rompere equazioni su più pagine
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,17 +69,13 @@
 \pagestyle{empty} % SWITCHA PER NON AVERE NUMERO PAGINA
 \vspace*{\fill}
 \begin{center}
-	{\large \textsc{Notes of}}\\
+	{\large \textsc{Soluzioni di}}\\
 	\vspace*{0.4cm}
-	{\Huge \textsc{Game Theory}}\\
-	\vspace*{1cm}
-	{\large {From Prof. Gianni Arioli's lectures}}\\
-	\vspace*{0.1cm}
-	{\large for the MSc in Mathematical Engineering}\\
-	\vspace*{0.4cm}
-	{\large {by Teo Bucci}}\\
-	\vspace*{1cm}
-	Politecnico di Milano\\A.Y. 2021/2022
+	{\Huge \textsc{Fondamenti di Ricerca Operativa}}\\
+	%\vspace*{1cm}
+	%{\large {by Teo Bucci}}\\
+	%\vspace*{1cm}
+	%Politecnico di Milano\\A.Y. 2021/2022
 \end{center}
 \vspace*{\fill}
 \newpage
@@ -172,15 +168,13 @@ $z_{ij} \in \{0,1\}$, uguali a $1$ se il porto $i$ rifornisce il centro $j$
 
 \Vin
 
-$\sum _{i} x_{ij} \geq r_{j} ,\forall j\in S$
-
-$\sum _{j} x_{ij} \leq d_{i} y_{i} ,\forall i\in P$
-
-$\sum _{i} z_{i,3} =1$
-
-$x_{ij} \leq d_{i} z_{ij} ,\forall i\in P,\forall j\in S$
-
-$z_{22} \leq z_{24}$
+\begin{align*}
+	\sum _{i} x_{ij} &\geq r_{j} \qquad\forall j\in S && \text{richiesta}\\
+	\sum _{j} x_{ij} &\leq d_{i} y_{i} \qquad\forall i\in P && \text{bigM + capacità}\\
+	\sum _{i} z_{i,3} &=1 && \text{centro 3}\\
+	x_{ij} &\leq d_{i} z_{ij} \qquad\forall i\in P,\forall j\in S && \text{bigM}\\
+	z_{22} &\leq z_{24} && \text{logico}\\
+\end{align*}
 
 \Es
 
@@ -213,11 +207,11 @@ $g_{3}$ costo squadra $3$
 
 \Var
 
-$x_{j} \geqslant 0,x_{j} \in \mathbb{Z}$ squadre tipo $1$
+$x_{j} \geq 0,x_{j} \in \mathbb{Z}$ squadre tipo $1$
 
-$y_{j} \geqslant 0,y_{j} \in \mathbb{Z}$ squadre tipo $2$
+$y_{j} \geq 0,y_{j} \in \mathbb{Z}$ squadre tipo $2$
 
-$z_{j} \geqslant 0,z_{j} \in \mathbb{Z}$ squadre tipo $3$
+$z_{j} \geq 0,z_{j} \in \mathbb{Z}$ squadre tipo $3$
 
 $\varphi \in \{0,1\}$, uguale a $1$ se uso 3 squadre di tipo $2$
 
@@ -231,21 +225,19 @@ $w_{ij} \in \{0,1\}$, uguale a $1$ se aereo $i$ in hangar $j$, $\forall i\in A,\
 
 \Vin
 
-$\sum _{j} w_{ij} =1,\forall i\in A$
+\begin{align*}
+	\sum _{j} w_{ij} &=1\qquad\forall i\in A&&\text{assegnazione}\\
+	x_{j} +3y_{j} +3z_{j} &\geq \sum _{i} c_{j} w_{ij} \qquad\forall j\in H &&\text{operai}\\
+	x_{j} +\phantom{3}y_{j}  +2z_{j} &\geq \sum _{i} s_{j} w_{ij} \qquad\forall j\in H &&\text{operai}\\
+	x_{j} \phantom{+3y_{j}}  +\phantom{2}z_{j}  &\geq \sum _{i} t_{j} w_{ij} \qquad\forall j\in H &&\text{operai}\\
+	\sum _{j} y_{j} -2&\leq M\varphi &&\text{(A)}\\
+	2\varphi &\leq \sum _{j} z_{j}&&\text{(B)}
+\end{align*}
 
-$\begin{drcases}
-	\begin{array}{ c c c c c }
-		x_{j} & +3y_{j} & +3z_{j} & \geq \sum _{i} c_{j} w_{ij} & \forall j\in H \\
-		x_{j} & +y_{j}  & +2z_{j} & \geq \sum _{i} s_{j} w_{ij} & \forall j\in H \\
-		x_{j} &         & +z_{j}  & \geq \sum _{i} t_{j} w_{ij} & \forall j\in H 
-	\end{array}
-\end{drcases} \ \text{operai}$
-
-$y_{j} \geqslant 3\ \ \overset{\text{(A)}}{\Rightarrow } \ \ \varphi =1\ \ \overset{\text{(B)}}{\Rightarrow } \ \ z_{j} \geqslant 2$
-
-(A) $\sum _{j} y_{j} -2\leq M\varphi $
-
-(B) $2\varphi \leq \sum _{j} z_{j}$
+Gli ultimi due vincoli servono per realizzare:
+\begin{equation*}
+	y_{j} \geq 3\ \ \overset{\text{(A)}}{\Rightarrow } \ \ \varphi =1\ \ \overset{\text{(B)}}{\Rightarrow } \ \ z_{j} \geq 2
+\end{equation*}
 
 \Es
 
@@ -253,7 +245,7 @@ $y_{j} \geqslant 3\ \ \overset{\text{(A)}}{\Rightarrow } \ \ \varphi =1\ \ \over
 
 $p_{j} ,\ j=1,2$
 
-$r_{j}$ pretto vendita
+$r_{j}$ prezzo vendita
 
 $d_{j}$ domanda
 
@@ -281,11 +273,13 @@ $O$ ore a disposizione
 
 \Var
 
-$x_{j} \geqslant 0,x_{j} \in \mathbb{Z}$ unità di prodotto $j$ da materie prime
+$x_{j} \geq 0,x_{j} \in \mathbb{Z}$ unità di prodotto $j$ da materie prime
 
 $y\geq 0,y\in \mathbb{Z}$ unità di prodotto $2$ da prodotto $1$
 
-$z\in \{0,1\}$, uguale a $1$ se attivo processo produttivo\Fob
+$z\in \{0,1\}$, uguale a $1$ se attivo processo produttivo
+
+\Fob
 
 \begin{equation*}
 	\max\left\{[ r_{1}( x_{1} -by) +r_{2}( x_{2} +y)] -\left[\sum _{ij} g_{i} q_{ji} x_{j} +kz\right]\right\}
@@ -293,15 +287,13 @@ $z\in \{0,1\}$, uguale a $1$ se attivo processo produttivo\Fob
 
 \Vin
 
-$y\leq Mz$
-
-$( x_{1} -by) \geqslant d_{1}$
-
-$( x_{2} -y) \geqslant d_{2}$
-
-$\sum _{j} q_{ji} x_{j} \leq c_{i} ,\forall i\in I$
-
-$o_{1} x_{1} +o_{2} x_{2} +o_{3} y\leq O$
+\begin{align*}
+	y&\leq Mz && \text{bigM}\\
+	( x_{1} -by) &\geq d_{1} && \text{richiesta}\\
+	( x_{2} -y) &\geq d_{2} && \text{richiesta}\\
+	\sum _{j} q_{ji} x_{j} &\leq c_{i} \qquad\forall i\in I && \text{disponibilità}\\
+	o_{1} x_{1} +o_{2} x_{2} +o_{3} y&\leq O && \text{disponibilità}\\
+\end{align*}
 
 \Es
 
@@ -345,17 +337,14 @@ $w_{k} \in \{0,1\}$, uguale a $1$ se uso aeroporto $k$
 
 \Vin
 
-$\sum _{i} x_{ij} \leq Mz_{j} ,\forall j\in J$
-
-$\sum _{i} p_{i} x_{ij} \leq B_{j} ,\forall j\in J$
-
-$\sum _{j} y_{jk} \leq G_{k} w_{k} ,\forall k\in K$
-
-$\sum _{k\in S_{r}} w_{k} \leq 1,\forall r=1,\dotsc ,R$
-
-$\sum _{j} x_{ij} =1,\forall i\in I$
-
-$\sum _{k} y_{jk} =z_{j} ,\forall j\in J$
+\begin{align*}
+	\sum _{i} x_{ij} &\leq Mz_{j} \qquad\forall j\in J && \text{bigM} \\
+	\sum _{i} p_{i} x_{ij} &\leq B_{j} \qquad\forall j\in J && \text{capacità} \\
+	\sum _{j} y_{jk} &\leq G_{k} w_{k} \qquad\forall k\in K && \text{bigM + capienza voli} \\
+	\sum _{k\in S_{r}} w_{k} &\leq 1\qquad\forall r=1,\dotsc ,R && \text{no aeroporti vicini} \\
+	\sum _{j} x_{ij} &=1\qquad\forall i\in I && \text{assegnamento} \\
+	\sum _{k} y_{jk} &=z_{j} \qquad\forall j\in J && \text{un aereo per aeroporto, se usato} \\
+\end{align*}
 
 \Es
 
@@ -389,17 +378,14 @@ $y_{i} \in \{0,1\}$, uguale a $1$ se accetto domanda
 
 \Vin
 
-$\sum _{i\in P} x_{ik} \leq n,\forall k\in D$ capacità classe
-
-$\sum _{i\in M} x_{ik} =\sum _{i\in F} x_{ik} ,\forall k\in D$ uguali $M/F$
-
-$\sum _{i\in P} x_{ik} b_{i} \geqslant q\sum _{i\in P} x_{ik} ,\forall k\in D$ preparazione
-
-$y_{i} \leq \sum _{k\in D} x_{ik} ,\forall i\in P$ bigM
-
-$\sum _{k\in D} x_{ik} \leq 1,\forall i\in P$ massimo $1$ corso per persona
-
-$x_{ik} =x_{jk} ,\forall (i,j)\in C,\forall k\in D$ coppie
+\begin{align*}
+	\sum _{i\in P} x_{ik} &\leq n\qquad\forall k\in D && \text{capacità classe} \\
+	\sum _{i\in M} x_{ik} &=\sum _{i\in F} x_{ik} \qquad\forall k\in D && \text{uguali $M/F$} \\
+	\sum _{i\in P} x_{ik} b_{i} &\geq q\sum _{i\in P} x_{ik} \qquad\forall k\in D && \text{preparazione} \\
+	y_{i} &\leq \sum _{k\in D} x_{ik} \qquad\forall i\in P && \text{bigM} \\
+	\sum _{k\in D} x_{ik} &\leq 1\qquad\forall i\in P && \text{massimo $1$ corso per persona} \\
+	x_{ik} &=x_{jk} \qquad\forall (i,j)\in C,\forall k\in D && \text{coppie} \\
+\end{align*}
 
 \Es
 
@@ -427,9 +413,9 @@ $w_{i} \in \{0,1\}$, uguale a $1$ se lavoro più di $q$
 
 $y_{i} \in \{0,1\}$, uguale a $1$ se uso processo $2$
 
-$x_{ij1} \geqslant 0,x_{ij1} \in \mathbb{Z}$ prodotto $j$ con processo $1$ in altiforno $i$
+$x_{ij1} \geq 0,x_{ij1} \in \mathbb{Z}$ prodotto $j$ con processo $1$ in altiforno $i$
 
-$x_{ij2} \geqslant 0,x_{ij2} \in \mathbb{Z}$ prodotto $j$ con processo $2$ in altiforno $i$
+$x_{ij2} \geq 0,x_{ij2} \in \mathbb{Z}$ prodotto $j$ con processo $2$ in altiforno $i$
 
 \Fob
 
@@ -439,17 +425,14 @@ $x_{ij2} \geqslant 0,x_{ij2} \in \mathbb{Z}$ prodotto $j$ con processo $2$ in al
 
 \Vin
 
-$\sum _{j} x_{ij2} \leq My_{i} ,\forall i\in A$ bigM
-
-$\sum _{j}\left[\frac{x_{ij1}}{q_{1j}} +\frac{x_{ij2}}{q_{2j}}\right] \leq m_{i} ,\forall i\in A$ capacità
-
-$\sum _{i}[ x_{ij1} +x_{ij2}] \geqslant r_{j} ,\forall j\in P$ richiesta
-
-$\sum _{i} y_{i} \leq N-1$ no processo $2$ su tutti gli altiforni
-
-$\sum _{i} w_{i} \geqslant 1$ almeno 1 usa più di $q$ quintali
-
-$qw_{i} \leq \sum _{ij}\left[\frac{x_{ij1}}{q_{1j}} +\frac{x_{ij2}}{q_{2j}}\right] ,\forall i\in A$ vincolo logico
+\begin{align*}
+	\sum _{j} x_{ij2} & \leq My_{i} \qquad\forall i\in A && \text{bigM} \\
+	\sum _{j}\left[\frac{x_{ij1}}{q_{1j}} +\frac{x_{ij2}}{q_{2j}}\right] & \leq m_{i} \qquad\forall i\in A && \text{capacità} \\
+	\sum _{i}[ x_{ij1} +x_{ij2}] & \geq r_{j} \qquad\forall j\in P && \text{richiesta} \\
+	\sum _{i} y_{i} & \leq N-1 && \text{no processo $2$ su tutti gli altiforni} \\
+	\sum _{i} w_{i} & \geq 1 && \text{almeno 1 usa più di $q$ quintali} \\
+	qw_{i} & \leq \sum _{ij}\left[\frac{x_{ij1}}{q_{1j}} +\frac{x_{ij2}}{q_{2j}}\right] \qquad\forall i\in A && \text{vincolo logico} \\
+\end{align*}
 
 \Es
 
@@ -471,9 +454,9 @@ $d_{j}$ vendita confezione $j$
 
 $b_{j}$ costo scatola $j$\Var
 
-$x_{i} \geqslant 0,x_{i} \in \mathbb{Z}$ numero cioccolatini $i$ prodotti
+$x_{i} \geq 0,x_{i} \in \mathbb{Z}$ numero cioccolatini $i$ prodotti
 
-$y_{j} \geqslant 0,y_{j} \in \mathbb{Z}$ numero confezioni $j$ prodotte
+$y_{j} \geq 0,y_{j} \in \mathbb{Z}$ numero confezioni $j$ prodotte
 
 $z\in \{0,1\}$, uguale a $1$ se acquisto almeno $q$ scatole
 
@@ -485,13 +468,12 @@ $z\in \{0,1\}$, uguale a $1$ se acquisto almeno $q$ scatole
 
 \Vin
 
-$x_{i} \geqslant \sum _{j} r_{ij} y_{j} ,\forall i\in I$ richiesta
-
-$x_{i} \leq m_{i} ,\forall i\in I$ capacità
-
-$\sum _{j} y_{j} \geqslant Qz$ sconto
-
-$x_{1} \geqslant 0.2\cdot \sum _{i} x_{i} \ \ $ quolità
+\begin{align*}
+	x_{i} & \geq \sum _{j} r_{ij} y_{j} \qquad\forall i\in I && \text{richiesta} \\
+	x_{i} & \leq m_{i} \qquad\forall i\in I && \text{capacità} \\
+	\sum _{j} y_{j} & \geq Qz && \text{sconto} \\
+	x_{1} & \geq 0.2\cdot \sum _{i} x_{i} && \text{qualità} \\
+\end{align*}
 
 \Es
 
@@ -515,7 +497,7 @@ $K$ formazioni $|K|=2$
 
 \Var
 
-$z\geqslant 0,z\in \mathbb{Z}$ valore formazione di minimo valore
+$z\geq 0,z\in \mathbb{Z}$ valore formazione di minimo valore
 
 $x_{ik} \in \{0,1\}$, uguale a $1$ se giocatore $i$ è nelle formazione $k$
 
@@ -529,17 +511,14 @@ $y_{i} \in \{0,1\}$, uguale a $1$ se $i$ gioca in entrambe
 
 \Vin
 
-$\sum _{i} r_{i} x_{ik} =A,\forall k\in K$
-
-$\sum _{i}( 1-r_{i}) x_{ik} =D,\forall k\in K$
-
-$\sum _{i} v_{i} x_{ik} \geqslant B,\forall k\in K$ minimo valore richiesto
-
-$\left( |G|-\sum _{i} y_{i}\right) \geqslant q$ almeno $q$ non giocanti entrambe
-
-$\left(\sum _{k} x_{ik} -1\right) \leq My_{i} ,\forall i\in I$ bigM
-
-$z\leq \sum _{i} v_{i} x_{ik} ,\forall k\in K$ bottleneck
+\begin{align*}
+	\sum _{i} r_{i} x_{ik} &=A\qquad\forall k\in K && \text{} \\
+	\sum _{i}( 1-r_{i}) x_{ik} &=D\qquad\forall k\in K && \text{} \\
+	\sum _{i} v_{i} x_{ik} &\geq B\qquad\forall k\in K && \text{minimo valore richiesto} \\
+	\left( |G|-\sum _{i} y_{i}\right) &\geq q && \text{almeno $q$ non giocanti entrambe} \\
+	\left(\sum _{k} x_{ik} -1\right) &\leq My_{i} \qquad\forall i\in I && \text{bigM} \\
+	z&\leq \sum _{i} v_{i} x_{ik} \qquad\forall k\in K && \text{bottleneck} \\
+\end{align*}
 
 \Es
 
@@ -567,7 +546,7 @@ $d_{ik}$ richiesta bene $i$ a $k$
 
 $y_{j} \in \{0,1\}$, uguale a $1$ se uso $j$
 
-$z_{ijk} \geqslant 0,z_{ijk} \in \mathbb{Z}$ numero di beni $i$ da $j$ a $k$
+$z_{ijk} \geq 0,z_{ijk} \in \mathbb{Z}$ numero di beni $i$ da $j$ a $k$
 
 \Fob
 
@@ -577,9 +556,10 @@ $z_{ijk} \geqslant 0,z_{ijk} \in \mathbb{Z}$ numero di beni $i$ da $j$ a $k$
 
 \Vin
 
-$\sum _{j} z_{ijk} \geqslant d_{ik} ,\forall i\in I,\forall k\in K$ richiesta
-
-$\sum _{ik} v_{i} z_{ijk} \leq b_{j} y_{j} ,\forall j\in J$ bigM e capacità
+\begin{align*}
+	\sum _{j} z_{ijk} &\geq d_{ik} \qquad\forall i\in I,\forall k\in K && \text{richiesta} \\
+	\sum _{ik} v_{i} z_{ijk} &\leq b_{j} y_{j} \qquad\forall j\in J && \text{bigM e capacità} \\
+\end{align*}
 
 \Es
 
@@ -597,7 +577,7 @@ $b_{i}$ max analisi nel centro $i$
 
 \Var
 
-$x_{ij} \geqslant 0,x_{ij} \in \mathbb{Z}$ numero analisi al centro $i$ per ospedale $j$
+$x_{ij} \geq 0,x_{ij} \in \mathbb{Z}$ numero analisi al centro $i$ per ospedale $j$
 
 $z_{2i} \in \{0,1\}$, uguale a $1$ se 2 si serve da $i$
 
@@ -609,17 +589,13 @@ $z_{2i} \in \{0,1\}$, uguale a $1$ se 2 si serve da $i$
 
 \Vin
 
-${\textstyle \begin{drcases}
-	{\textstyle \sum\nolimits _{j} x_{1j} \leq 0.8\cdot \left(\sum\nolimits _{j} x_{2j} +x_{3j}\right)}\\
-	{\textstyle \sum _{j} x_{2j} \leq 0.6\cdot \left(\sum _{j} x_{ij} +x_{3j}\right)}\\
-	{\textstyle \sum _{j}( x_{3j} +x_{4j}) \leq 0.5\cdot \sum _{ij} x_{ij}}
-	\end{drcases} \ \text{qualità}}$
-
-$\sum _{i} x_{ij} =r_{j} ,\forall j\in J$ richiesta
-
-$\sum _{j} x_{ij} \leq b_{i} ,\forall i\in I$ capacità
-
-$\sum z_{2i} =1$
-
-$x_{i2} \leq b_{i} z_{2i} ,\forall i\in I$ bigM
+\begin{align*}
+	\sum _{j} x_{1j} &\leq 0.8\cdot \left(\sum _{j} x_{2j} +x_{3j}\right) && \text{qualità} \\
+	\sum _{j} x_{2j} &\leq 0.6\cdot \left(\sum _{j} x_{ij} +x_{3j}\right) && \text{qualità} \\
+	\sum _{j}( x_{3j} +x_{4j}) &\leq 0.5\cdot \sum _{ij} x_{ij} && \text{qualità} \\
+	\sum _{i} x_{ij} &=r_{j} \qquad\forall j\in J && \text{richiesta} \\
+	\sum _{j} x_{ij} &\leq b_{i} \qquad\forall i\in I && \text{capacità} \\
+	\sum z_{2i} &=1 && \text{un solo centro per 2} \\
+	x_{i2} &\leq b_{i} z_{2i} \qquad\forall i\in I && \text{bigM} \\
+\end{align*}
 \end{document}
