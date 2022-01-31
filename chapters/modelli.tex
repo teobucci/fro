@@ -1,0 +1,473 @@
+%!TEX root = ../fro.tex
+\chapter{Programmazione Lineare}
+
+\Es
+
+\Par
+
+$P$ porti, $i=1,2,3$
+
+$c_{i}$ costo per porto per ogni vettura $( 150,250,200)$
+
+$t_{i}$ costo fisso porto
+
+$S$ centri di smistamento, $j=1,\dotsc ,4$
+
+$k_{i}$ costo di invio dal porto $i$ al km
+
+$a_{ij}$ distanza dal porto $i$ al centro $j$
+
+$r_{j}$ richiesta del centro $j$
+
+$d_{i}$ capacità del porto $i$
+
+\Var
+
+$x_{ij} \geq 0,x_{ij} \in \mathbb{Z}$ numero di automobili dal porto $i$ al centro $j$
+
+$y_{i} \in \{0,1\}$, uguali a $1$ se uso il porto $i$
+
+$z_{ij} \in \{0,1\}$, uguali a $1$ se il porto $i$ rifornisce il centro $j$
+
+\Fob
+
+\begin{equation*}
+	\min\bigg\{\underbrace{\sum _{ij} c_{i} x_{ij}}_{\text{auto}} +\underbrace{\sum _{i} t_{i} y_{i}}_{\text{porto}} +\underbrace{\sum _{ij} a_{ij} k_{i} x_{ij}}_{\text{trasporto}}\bigg\}
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	\sum _{i} x_{ij} &\geq r_{j} \qquad\forall j\in S && \text{richiesta}\\
+	\sum _{j} x_{ij} &\leq d_{i} y_{i} \qquad\forall i\in P && \text{bigM + capacità}\\
+	\sum _{i} z_{i,3} &=1 && \text{centro 3}\\
+	x_{ij} &\leq d_{i} z_{ij} \qquad\forall i\in P,\forall j\in S && \text{bigM}\\
+	z_{22} &\leq z_{24} && \text{logico}\\
+\end{align*}
+
+\Es
+
+\Par
+
+$A$ aeroporti
+
+$H$ hangar
+
+$c_{j},s_{j},t_{j}$ operatori $\forall j\in H$
+
+$g_{1}$ costo squadra $1$
+
+$g_{2}$ costo squadra $2$
+
+$g_{3}$ costo squadra $3$
+
+\begin{center}
+	
+	\begin{tabular}{|c|c|c|}
+		\hline 
+		$1$c & $1$s & $1$t \\
+		\hline 
+		$3$c & $1$s & X    \\
+		\hline 
+		$3$c & $2$s & $2$t \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\Var
+
+$x_{j} \geq 0,x_{j} \in \mathbb{Z}$ squadre tipo $1$
+
+$y_{j} \geq 0,y_{j} \in \mathbb{Z}$ squadre tipo $2$
+
+$z_{j} \geq 0,z_{j} \in \mathbb{Z}$ squadre tipo $3$
+
+$\varphi \in \{0,1\}$, uguale a $1$ se uso 3 squadre di tipo $2$
+
+$w_{ij} \in \{0,1\}$, uguale a $1$ se aereo $i$ in hangar $j$, $\forall i\in A,\forall j\in H$
+
+\Fob
+
+\begin{equation*}
+	\min \sum _{j}( x_{j} g_{1} +y_{j} g_{2} +z_{j} g_{3})
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	\sum _{j} w_{ij} &=1\qquad\forall i\in A&&\text{assegnazione}\\
+	x_{j} +3y_{j} +3z_{j} &\geq \sum _{i} c_{j} w_{ij} \qquad\forall j\in H &&\text{operai}\\
+	x_{j} +\phantom{3}y_{j}  +2z_{j} &\geq \sum _{i} s_{j} w_{ij} \qquad\forall j\in H &&\text{operai}\\
+	x_{j} \phantom{+3y_{j}}  +\phantom{2}z_{j}  &\geq \sum _{i} t_{j} w_{ij} \qquad\forall j\in H &&\text{operai}\\
+	\sum _{j} y_{j} -2&\leq M\varphi &&\text{(A)}\\
+	2\varphi &\leq \sum _{j} z_{j}&&\text{(B)}
+\end{align*}
+
+Gli ultimi due vincoli servono per realizzare:
+\begin{equation*}
+	y_{j} \geq 3\ \ \overset{\text{(A)}}{\Rightarrow } \ \ \varphi =1\ \ \overset{\text{(B)}}{\Rightarrow } \ \ z_{j} \geq 2
+\end{equation*}
+
+\Es
+
+\Par
+
+$p_{j} ,\ j=1,2$
+
+$r_{j}$ prezzo vendita
+
+$d_{j}$ domanda
+
+$I$ materie prime $i\in I$
+
+$c_{i}$ disponibilità
+
+$g_{i}$ costo unitario materie prima
+
+$g_{ji}$ materia $i$ necessaria per $j$
+
+$o_{1}$ ore $p_{1}$ da materia prima
+
+$o_{2}$ ore $p_{2}$ da materia prima
+
+oppure ottengo $p_{2}$ con
+
+$b$ unità di $p_{1}$ per $p_{2}$
+
+$o_{3}$ ore lavorazione ($p_{2}$ da $p_{1}$)
+
+$k$ costo fisso attivazione
+
+$O$ ore a disposizione
+
+\Var
+
+$x_{j} \geq 0,x_{j} \in \mathbb{Z}$ unità di prodotto $j$ da materie prime
+
+$y\geq 0,y\in \mathbb{Z}$ unità di prodotto $2$ da prodotto $1$
+
+$z\in \{0,1\}$, uguale a $1$ se attivo processo produttivo
+
+\Fob
+
+\begin{equation*}
+	\max\left\{[ r_{1}( x_{1} -by) +r_{2}( x_{2} +y)] -\left[\sum _{ij} g_{i} q_{ji} x_{j} +kz\right]\right\}
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	y&\leq Mz && \text{bigM}\\
+	( x_{1} -by) &\geq d_{1} && \text{richiesta}\\
+	( x_{2} -y) &\geq d_{2} && \text{richiesta}\\
+	\sum _{j} q_{ji} x_{j} &\leq c_{i} \qquad\forall i\in I && \text{disponibilità}\\
+	o_{1} x_{1} +o_{2} x_{2} +o_{3} y&\leq O && \text{disponibilità}\\
+\end{align*}
+
+\Es
+
+\Par
+
+$T$ gruppi $i\in T$
+
+$p_{i}$ persone
+
+$J$ aerei $j\in J$
+
+$c_{j}$ costo noleggio
+
+$B_{j}$ capienza aereo
+
+$A$ aeroporto $k\in A$
+
+$G_{k}$ max voli per aeroporto
+
+$l_{jk}$ costo di far partire $j$ da $k$
+
+$R$ sottoinsiemi di aeroporti vicini
+
+$S_{r}$ con $r=1,\dotsc ,R$, al più un aeroporto
+
+\Var
+
+$x_{ij} \in \{0,1\}$, uguale a $1$ se gruppo $i$ ad aereo $j$
+
+$y_{jk} \in \{0,1\}$, uguale a $1$ se aereo $j$ parte da $k$
+
+$z_{j} \in \{0,1\}$, uguale a $1$ se uso aereo $j$
+
+$w_{k} \in \{0,1\}$, uguale a $1$ se uso aeroporto $k$
+
+\Fob
+
+\begin{equation*}
+	\min\left\{\sum _{j} c_{j} z_{j} +\sum _{jk} l_{jk} y_{jk}\right\}
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	\sum _{i} x_{ij} &\leq Mz_{j} \qquad\forall j\in J && \text{bigM} \\
+	\sum _{i} p_{i} x_{ij} &\leq B_{j} \qquad\forall j\in J && \text{capacità} \\
+	\sum _{j} y_{jk} &\leq G_{k} w_{k} \qquad\forall k\in K && \text{bigM + capienza voli} \\
+	\sum _{k\in S_{r}} w_{k} &\leq 1\qquad\forall r=1,\dotsc ,R && \text{no aeroporti vicini} \\
+	\sum _{j} x_{ij} &=1\qquad\forall i\in I && \text{assegnamento} \\
+	\sum _{k} y_{jk} &=z_{j} \qquad\forall j\in J && \text{un aereo per aeroporto, se usato} \\
+\end{align*}
+
+\Es
+
+\Par
+
+$P$ domande iscrizione $i\in P$
+
+$M\subset P,F\subset P$, uomini, donne $( M\cup F=P,M\cap F=\emptyset )$
+
+$n$ max persone per classe
+
+$d$ massimo classi ($D=1,\dotsc ,d$ insieme classi)
+
+$b_{i}$ preparazione di $i$
+
+$q$ livello minimo per classe
+
+$C$ coppie formate $( i,j) \in C,i\in M,j\in F$
+
+\Var
+
+$x_{ik} \in \{0,1\}$, uguale a $1$ se persona $i$ in classe $k$
+
+$y_{i} \in \{0,1\}$, uguale a $1$ se accetto domanda
+
+\Fob
+
+\begin{equation*}
+	\max\sum _{i} y_{i}
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	\sum _{i\in P} x_{ik} &\leq n\qquad\forall k\in D && \text{capacità classe} \\
+	\sum _{i\in M} x_{ik} &=\sum _{i\in F} x_{ik} \qquad\forall k\in D && \text{uguali $M/F$} \\
+	\sum _{i\in P} x_{ik} b_{i} &\geq q\sum _{i\in P} x_{ik} \qquad\forall k\in D && \text{preparazione} \\
+	y_{i} &\leq \sum _{k\in D} x_{ik} \qquad\forall i\in P && \text{bigM} \\
+	\sum _{k\in D} x_{ik} &\leq 1\qquad\forall i\in P && \text{massimo $1$ corso per persona} \\
+	x_{ik} &=x_{jk} \qquad\forall (i,j)\in C,\forall k\in D && \text{coppie} \\
+\end{align*}
+
+\Es
+
+\Par
+
+$A$ insieme altiforni $i=1\dotsc N,i\in A$
+
+$m_{i}$ max quintali per altiforno
+
+$P$ prodotti $j\in P$
+
+$q_{1j}$ prodotto $j$ da 1 quintale di materia prime con processo 1 (prodotto/quintale)
+
+$q_{2j}$ prodotto $j$ da 1 quintale di materia prime con processo 2 (prodotto/quintale)
+
+$r_{j}$ richiesto prodotto
+
+$c_{1i}$ costo lavorazione al quintale in altiforno $i$ con processo 1 (euro/quintale)
+
+$c_{2i}$ costo lavorazione al quintale in altiforno $i$ con processo $2$ (euro/quintale)
+
+$f_{i}$ costo attivazione processo 2 in altiforno $i$
+
+\Var
+
+$w_{i} \in \{0,1\}$, uguale a $1$ se lavoro più di $q$
+
+$y_{i} \in \{0,1\}$, uguale a $1$ se uso processo $2$
+
+$x_{ij1} \geq 0,x_{ij1} \in \mathbb{Z}$ prodotto $j$ con processo $1$ in altiforno $i$
+
+$x_{ij2} \geq 0,x_{ij2} \in \mathbb{Z}$ prodotto $j$ con processo $2$ in altiforno $i$
+
+\Fob
+
+\begin{equation*}
+	\min \left\{\sum _{i} y_{i} f_{i} +\sum _{ij}\left[ c_{1i}\frac{x_{ij1}}{q_{1j}} +c_{2i}\frac{x_{ij2}}{q_{2j}}\right]\right\}
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	\sum _{j} x_{ij2} & \leq My_{i} \qquad\forall i\in A && \text{bigM} \\
+	\sum _{j}\left[\frac{x_{ij1}}{q_{1j}} +\frac{x_{ij2}}{q_{2j}}\right] & \leq m_{i} \qquad\forall i\in A && \text{capacità} \\
+	\sum _{i}[ x_{ij1} +x_{ij2}] & \geq r_{j} \qquad\forall j\in P && \text{richiesta} \\
+	\sum _{i} y_{i} & \leq N-1 && \text{no processo $2$ su tutti gli altiforni} \\
+	\sum _{i} w_{i} & \geq 1 && \text{almeno 1 usa più di $q$ quintali} \\
+	qw_{i} & \leq \sum _{ij}\left[\frac{x_{ij1}}{q_{1j}} +\frac{x_{ij2}}{q_{2j}}\right] \qquad\forall i\in A && \text{vincolo logico} \\
+\end{align*}
+
+\Es
+
+\Par
+
+$C$ cioccolatini $i\in C$
+
+$S$ confezioni regalo $j\in S$
+
+$r_{ij}$ richieste cioccolatini $i$ in confezione $j$
+
+$g_{i}$ costo cioccolatino
+
+$m_{i}$ max produzione
+
+$p_{i}$ vendita cioccolatino sfuso $i$
+
+$d_{j}$ vendita confezione $j$
+
+$b_{j}$ costo scatola $j$
+
+\Var
+
+$x_{i} \geq 0,x_{i} \in \mathbb{Z}$ numero cioccolatini $i$ prodotti
+
+$y_{j} \geq 0,y_{j} \in \mathbb{Z}$ numero confezioni $j$ prodotte
+
+$z\in \{0,1\}$, uguale a $1$ se acquisto almeno $q$ scatole
+
+\Fob
+
+\begin{equation*}
+	\max\bigg\{\underbrace{\sum _{j} d_{j} y_{j}}_{\text{confezioni}} +\underbrace{\sum _{i} p_{i}\bigg( x_{i} -\sum _{j} r_{ij} y_{j}\bigg)}_{\text{sfusi}} -\underbrace{\sum _{i} g_{i} x_{i}}_{\text{costo prod.}} -\underbrace{\sum _{j} b_{j} y_{j}}_{\text{costo scatole}} +\underbrace{zB}_{\text{sconto}}\bigg\}
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	x_{i} & \geq \sum _{j} r_{ij} y_{j} \qquad\forall i\in I && \text{richiesta} \\
+	x_{i} & \leq m_{i} \qquad\forall i\in I && \text{capacità} \\
+	\sum _{j} y_{j} & \geq Qz && \text{sconto} \\
+	x_{1} & \geq 0.2\cdot \sum _{i} x_{i} && \text{qualità} \\
+\end{align*}
+
+\Es
+
+\Par
+
+$D$ difensori
+
+$A$ attaccanti
+
+$G$ giocatori $i\in G$
+
+$r_{i} \in \{0,1\}$, uguale a $1$ se giocatore $i$ è attaccante
+
+$v_{i}$ valore giocatore
+
+$B$ valore complessivo formazione
+
+$q$ giocatori non giocanti
+
+$K$ formazioni $|K|=2$
+
+\Var
+
+$z\geq 0,z\in \mathbb{Z}$ valore formazione di minimo valore
+
+$x_{ik} \in \{0,1\}$, uguale a $1$ se giocatore $i$ è nelle formazione $k$
+
+$y_{i} \in \{0,1\}$, uguale a $1$ se $i$ gioca in entrambe
+
+\Fob
+
+\begin{equation*}
+	\max z
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	\sum _{i} r_{i} x_{ik} &=A\qquad\forall k\in K && \text{} \\
+	\sum _{i}( 1-r_{i}) x_{ik} &=D\qquad\forall k\in K && \text{} \\
+	\sum _{i} v_{i} x_{ik} &\geq B\qquad\forall k\in K && \text{minimo valore richiesto} \\
+	\left( |G|-\sum _{i} y_{i}\right) &\geq q && \text{almeno $q$ non giocanti entrambe} \\
+	\left(\sum _{k} x_{ik} -1\right) &\leq My_{i} \qquad\forall i\in I && \text{bigM} \\
+	z&\leq \sum _{i} v_{i} x_{ik} \qquad\forall k\in K && \text{bottleneck} \\
+\end{align*}
+
+\Es
+
+\Par
+
+$B$ beni $i\in B$
+
+$M$ magazzino $j\in M$
+
+$A$ luoghi distribuzione $k\in A$
+
+$c_{i}$ costo bene $i$
+
+$v_{i}$ spazio occupato da $i$ in magazzino
+
+$b_{j}$ capacità
+
+$f_{j}$ costo fisso magazzino se usato
+
+$g_{jk}$ costo trasporto bene da $j$ a $k$
+
+$d_{ik}$ richiesta bene $i$ a $k$
+
+\Var
+
+$y_{j} \in \{0,1\}$, uguale a $1$ se uso $j$
+
+$z_{ijk} \geq 0,z_{ijk} \in \mathbb{Z}$ numero di beni $i$ da $j$ a $k$
+
+\Fob
+
+\begin{equation*}
+	\min\left\{\sum _{ijk} c_{i} z_{ijk} +\sum _{j} f_{j} y_{j} +\sum _{ijk} z_{ijk} g_{jk}\right\}
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	\sum _{j} z_{ijk} &\geq d_{ik} \qquad\forall i\in I,\forall k\in K && \text{richiesta} \\
+	\sum _{ik} v_{i} z_{ijk} &\leq b_{j} y_{j} \qquad\forall j\in J && \text{bigM e capacità} \\
+\end{align*}
+
+\Es
+
+\Par
+
+$C$ analisi $i\in C,i=1,\dotsc ,4$
+
+$O$ ospedali $j\in O,j=1,\dotsc ,5$
+
+$d_{ij}$ tempo da $i$ a $j$
+
+$r_{j}$ richieste analisi
+
+$b_{i}$ max analisi nel centro $i$
+
+\Var
+
+$x_{ij} \geq 0,x_{ij} \in \mathbb{Z}$ numero analisi al centro $i$ per ospedale $j$
+
+$z_{2i} \in \{0,1\}$, uguale a $1$ se 2 si serve da $i$
+
+\Fob
+
+\begin{equation*}
+	\min\sum _{ij} a_{ij} x_{ij}
+\end{equation*}
+
+\Vin
+
+\begin{align*}
+	\sum _{j} x_{1j} &\leq 0.8\cdot \left(\sum _{j} x_{2j} +x_{3j}\right) && \text{qualità} \\
+	\sum _{j} x_{2j} &\leq 0.6\cdot \left(\sum _{j} x_{ij} +x_{3j}\right) && \text{qualità} \\
+	\sum _{j}( x_{3j} +x_{4j}) &\leq 0.5\cdot \sum _{ij} x_{ij} && \text{qualità} \\
+	\sum _{i} x_{ij} &=r_{j} \qquad\forall j\in J && \text{richiesta} \\
+	\sum _{j} x_{ij} &\leq b_{i} \qquad\forall i\in I && \text{capacità} \\
+	\sum z_{2i} &=1 && \text{un solo centro per 2} \\
+	x_{i2} &\leq b_{i} z_{2i} \qquad\forall i\in I && \text{bigM} \\
+\end{align*}
