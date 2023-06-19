@@ -1,23 +1,32 @@
-name: PDF Generation
+# This workflow builds a pdf, and when a tag is pushed then the pdf is released to GitHub releases
+name: Release PDF on tag
 
 on:
   push:
-    branches:
-      - master
+    #branches:
+    #  - master
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up LaTeX environment
-        uses: xu-cheng/latex-action@v2
-        with:
-          packages: latexmk
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Create commit hash file
+        run: git show -s --format=%H > commit_hash.part
 
       - name: Compile LaTeX document
-        run: |
-          pdflatex -interaction=nonstopmode -halt-on-error main.tex
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex
+          latexmk_shell_escape: true
+      
+      - name: Remove commit hash file
+        run: rm -f commit_hash.part
 
       - name: Create release
         id: create_release
@@ -25,13 +34,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release ${{ github.run_number }}
+          tag_name: v${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
 
       - name: Upload PDF artifact
-        uses: actions/upload-artifact@v2
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: main.pdf
-          path: main.pdf
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./main.pdf
+          asset_name: main.pdf
+          asset_content_type: pdf
