@@ -8,7 +8,7 @@
 \usepackage{pdfpages}
 
 \usepackage{geometry}
-\geometry{
+\geometry{%
 	nomarginpar, % Toglie doppi margini
 	margin=1in, % Imposta i margini a 1 inch
 }
@@ -55,11 +55,6 @@
 \newcommand{\Fob}{\textbf{Funzione obiettivo}}
 \newcommand{\Vin}{\textbf{Vincoli}}
 
-% Non servono, preferisco la numerazione locale e non globale delle figure e delle equazioni
-%\usepackage{chngcntr}
-%\counterwithout{figure}{chapter}
-%\counterwithout{equation}{chapter}
-
 \allowdisplaybreaks[4] % Consente di rompere equazioni su più pagine
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,11 +62,10 @@
 
 \begin{document}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtEndDocument{\cleardoublepage}
 
 \frontmatter
-\pagestyle{empty} % SWITCHA PER NON AVERE NUMERO PAGINA
+\pagestyle{empty}
 \vspace*{\fill}
 \begin{center}
 	{\large \textsc{Soluzioni agli esercizi aggiuntivi di}}\\
@@ -85,63 +79,21 @@
 	Revisione del 2 Febbraio 2022
 \end{center}
 \vspace*{\fill}
-\newpage
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%{\Large \textit{Appunti di Equazioni alle Derivate Parziali}}
-%
-%\vspace*{\fill}
-%
-%\textcopyright \ Gli autori, tutti i diritti riservati
-%
-%Sono proibite tutte le riproduzioni senza autorizzazione scritta degli autori.
-%
-%Revisione del \today
-%
-%Developed by\\
-%Teo Bucci - \texttt{teobucci8@gmail.com}\\
-%Filippo Cipriani - \texttt{filippo.cipriani99@hotmail.it}\\ \\
-%Compiled with \ensuremath\heartsuit \\
-
-%\textbf{Prefazione}
-
-%Per segnalare eventuali errori o suggerimenti potete contattare gli autori.
-
-\newpage
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
 
 % INDICE
 \addtocontents{toc}{\protect\thispagestyle{empty}}
 \tableofcontents
-%\newpage
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% PAGINA VUOTA PER FAR PARTIRE IL CAPITOLO IN UNA PAGINA DISPARI
-%\myNewEmptyPage
-
-\AtEndDocument{\cleardoublepage}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% MAIN MATTER
 \mainmatter
-\pagestyle{fancy} % Riswitcha per riavere il numero pagina
-%\setcounter{page}{1} % Fa ripartire il contatore pagina da 1
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
 
 \include{chapters/modelli}
 \include{chapters/pl-dualita}
 \include{chapters/grafi}
 \include{chapters/pli}
-\chapter*{Schema esercizi}
+\chapter{Schema esercizi}
 Lo schema seguente è incredibilmente utile, tuttavia non siamo riusciti a trovare la voglia di finirlo, aiutateci.
 \includepdf[noautoscale=true, width=\paperwidth, pages=-]{chapters/schema.pdf}
 
