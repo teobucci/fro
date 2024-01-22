@@ -1,12 +1,11 @@
-# This workflow builds a pdf, and when a tag is pushed then the pdf is released to GitHub releases
+# This workflow is triggered when a tag is pushed.
+# It compiles the pdf and uploads it as a release.
 name: Release PDF on tag
 
 on:
   push:
-    #branches:
-    #  - master
     tags:
-      - 'v*.*.*'
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   build:
@@ -15,6 +14,14 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
+
+      - name: Get repository basename
+        id: get_repo_name 
+        run: echo "repo_name=$(basename $GITHUB_REPOSITORY)" > $GITHUB_OUTPUT
+
+      - name: Get tag basename
+        id: get_tag_name 
+        run: echo "tag_name=$(basename $GITHUB_REF)" > $GITHUB_OUTPUT
 
       - name: Create commit hash file
         run: git show -s --format=%H > commit_hash.part
@@ -34,7 +41,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ github.ref }}
+          tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
@@ -47,5 +54,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
           asset_path: ./main.pdf
-          asset_name: main.pdf
+          asset_name: ${{ github.repository }}-${{ steps.get_tag_name.outputs.tag_name }}.pdf
           asset_content_type: pdf
